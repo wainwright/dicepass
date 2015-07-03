@@ -1,0 +1,26 @@
+#!/usr/bin/python3
+# :setf python
+
+import os
+import random
+import argparse
+
+def loadWords(path):
+	words = []
+	with open(path, 'r') as f:
+		for line in f:
+			words.append(line.split()[1])
+	return words
+
+def parseArgs():
+	parser = argparse.ArgumentParser(description='Generate diceware password.')
+	parser.add_argument('--length', '-n', type=int, default=6,
+			help='number of words')
+	return parser.parse_args()
+
+if __name__ == '__main__':
+	args = parseArgs()
+	words = loadWords('diceware.wordlist.asc')
+	rand = random.SystemRandom()
+	random.shuffle(words, rand.random)
+	print(' '.join(words[:args.length]))
